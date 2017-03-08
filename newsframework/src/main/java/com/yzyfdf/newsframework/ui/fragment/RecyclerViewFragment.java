@@ -160,7 +160,16 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
         }
 
         //请求body
+        if (mFootViewLayout != null) {
+            Util.runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    mFootViewLayout.changeView(FootViewLayout.FOOTSTAUTS.LOADING);
+                }
+            });
+        }
         List<ItemType> data = requestBodyData(mCurrentState);
+
         //如果集合是空,或者集合的个数为0,你还要判断当前的mShowItems的个数
         if (mShowItems.size() > 0) {
             //说明以前有数据
@@ -171,7 +180,6 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
                     Util.runOnUIThread(new Runnable() {
                         @Override
                         public void run() {
-
                             mFootViewLayout.changeView(FootViewLayout.FOOTSTAUTS.NOMORE);
                         }
                     });
