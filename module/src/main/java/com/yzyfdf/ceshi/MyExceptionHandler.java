@@ -2,7 +2,7 @@ package com.yzyfdf.ceshi;
 
 import android.os.Process;
 
-import com.yzyfdf.newsframework.ui.act.NewsApplication;
+import com.yzyfdf.newsframework.util.Constant;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,7 +16,7 @@ public class MyExceptionHandler implements Thread.UncaughtExceptionHandler {
     @Override
     public void uncaughtException(Thread t, Throwable e) {
 
-        File dir = new File(NewsApplication.mContext.getApplicationContext().getFilesDir().getAbsolutePath());
+        File dir = new File(Constant.mContext.getApplicationContext().getFilesDir().getAbsolutePath());
         File errorFile = new File(dir,"error.log");
         try {
             PrintStream printStream = new PrintStream(errorFile);

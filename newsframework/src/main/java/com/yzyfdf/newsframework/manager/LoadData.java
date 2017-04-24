@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.yzyfdf.newsframework.util.GsonUtil;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -52,6 +53,37 @@ public class LoadData {
         return parseJson(content,clazz);
     }
 
+    public <T> T postBeanData(String url,Class<T> clazz,HashMap<String, String> paramsMap) {
+
+        //1. 去网络获取数据
+        String content = HttpManager.getInstance().postData(url,paramsMap);
+
+        //2. 判断当前的数据是否为空
+        if (TextUtils.isEmpty(content)) {
+
+            //如果是空//去缓存类中去取数据
+            System.out.println("获取网络数据失败,尝试读取本地缓存");
+            content = CacheManger.getInstance().getCacheData(url);
+
+            //如果任为空,获取数据失败
+            if (TextUtils.isEmpty(content)) {
+                System.out.println("没有获取任何数据");
+                return null;
+            }
+        } else {
+
+            //不为空//保存数据,刷新缓存数据
+            System.out.println("获取网络数据成功,缓存本地");
+//            CacheManger.getInstance().saveData(content,url);
+        }
+
+        //到这一步为止,我们已经得到数据了,解析
+        content = content.replace("{\"list\":", "");
+        content = content.substring(0, content.length() - 1);
+
+        System.out.println(content);
+        return parseJson(content,clazz);
+    }
 
     //解析json数据
     private<T> T parseJson(String content,Class<T> clazz) {

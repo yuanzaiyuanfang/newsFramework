@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ceshi</string>
+    <string name="app_name">newsFramework</string>
     <array name="news_titles">
         <item>资讯</item>
         <item>博客</item>

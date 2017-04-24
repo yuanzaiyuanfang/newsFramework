@@ -103,7 +103,9 @@ public class NewsFragment extends RecyclerViewFragment {
 
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
-                Glide.with(container.getContext()).load(headBean.getResult().getItems().get(position).getImg()).into(imageView);
+                Glide.with(container.getContext()).load(headBean.getResult().getItems().get(position).getImg())
+//                        .transform(new GlideRoundTransform(container.getContext(),20))
+                        .into(imageView);
 
                 container.addView(imageView);
 
@@ -121,7 +123,6 @@ public class NewsFragment extends RecyclerViewFragment {
         //设置标题
         final TextView headTitle = (TextView) holder.itemView.findViewById(R.id.tv_news_title);
         headTitle.setText(headBean.getResult().getItems().get(0).getName());
-
 
     }
 

@@ -3,7 +3,7 @@ package com.yzyfdf.newsframework.manager;
 import android.os.Environment;
 
 
-import com.yzyfdf.newsframework.ui.act.NewsApplication;
+import com.yzyfdf.newsframework.util.Constant;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,7 +21,7 @@ public class CacheManger {
 
     private CacheManger() {
         saveCacheDir = Environment.getExternalStorageDirectory().getPath() + File.separator
-                + NewsApplication.mContext.getPackageName() + File.separator + "cache";
+                + Constant.mContext.getPackageName() + File.separator + "cache";
 
         File saveDir = new File(saveCacheDir);
 

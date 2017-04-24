@@ -11,10 +11,10 @@ import com.yzyfdf.ceshi.ui.fragment.NullFragment;
 public enum MainTabs {
 
     NEWS("NEWS","综合", R.mipmap.ic_launcher, MultipleFragment.class,null),
-    TWEENT("TWEENT","动弹", R.mipmap.ic_launcher, NullFragment.class,null),
-    PUBLISHTWTEENT("PUBLISHTWTEENT","弹一弹", R.mipmap.ic_launcher, NullFragment.class,null),
-    FIND("FIND","发现", R.mipmap.ic_launcher, NullFragment.class,null),
-    ME("ME","我的", R.mipmap.ic_launcher, NullFragment.class,null);
+    NEWS2("NEWS2","AA", R.mipmap.ic_launcher, NullFragment.class,null),
+    NEWS3("NEWS3","BB", R.mipmap.ic_launcher, NullFragment.class,null),
+    NEWS4("NEWS4","CC", R.mipmap.ic_launcher, NullFragment.class,null),
+    NEWS5("NEWS5","DD", R.mipmap.ic_launcher, NullFragment.class,null);
 
     //tag
     public String          mTag;

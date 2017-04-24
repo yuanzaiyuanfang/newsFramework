@@ -54,6 +54,7 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
 
     //初始化
     private void init() {
+        System.out.println("初始化");
         //recyclerView初始化分成两步
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
@@ -171,8 +172,8 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
         List<ItemType> data = requestBodyData(mCurrentState);
 
         //如果集合是空,或者集合的个数为0,你还要判断当前的mShowItems的个数
-        if (mShowItems.size() > 0) {
             //说明以前有数据
+        if (mShowItems.size() > 0) {
             if (data == null || data.size() == 0) {
                 System.out.println("当前没有数据");
                 ToastUtil.showToast("当前没有数据,或者网络异常");
@@ -188,13 +189,13 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
                 mCurrentState = LOADSTATE.NONE;
                 return mShowItems;
             }
-        } else {
+        } else {//说明以前没有数据
             if (data == null || data.size() == 0) {
                 //更新状态
                 mCurrentState = LOADSTATE.NONE;
                 return null;
             }
-            //说明以前没有数据
+
         }
 
         //下拉刷新要清空以前的数据

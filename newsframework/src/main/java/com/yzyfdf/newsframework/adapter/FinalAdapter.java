@@ -52,7 +52,10 @@ public class FinalAdapter extends RecyclerView.Adapter<FinalViewHolder> {
                 break;
             case FOOTTYPE:
                 mFootViewLayout = new FootViewLayout(parent.getContext());
+                RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                mFootViewLayout.setLayoutParams(layoutParams);
                 //                footViewLayout.changeView(FootViewLayout.FOOTSTAUTS.NOMORE);
+
                 view = mFootViewLayout;
                 break;
 

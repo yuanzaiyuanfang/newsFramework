@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.yzyfdf.ceshi.R;
 import com.yzyfdf.ceshi.bean.MainTabs;
-import com.yzyfdf.newsframework.ui.act.NewsApplication;
+import com.yzyfdf.newsframework.util.Constant;
 import com.yzyfdf.newsframework.util.ToastUtil;
 
 public class MainActivity extends AppCompatActivity implements TabHost.OnTabChangeListener {
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         init();
 
         //检查权限
-        if (ContextCompat.checkSelfPermission(NewsApplication.mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(Constant.mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             System.out.println("申请授权");
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 10101);
         }
@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
         //去掉虚线
         mFragmentTabHost.getTabWidget().setDividerDrawable(null);
         mFragmentTabHost.setOnTabChangedListener(this);
+
     }
 
     @Override
@@ -106,20 +107,20 @@ public class MainActivity extends AppCompatActivity implements TabHost.OnTabChan
                 mSupportActionBar.setTitle("综合");
 
                 break;
-            case "TWEENT":
-                mSupportActionBar.setTitle("动弹");
+            case "NEWS2":
+                mSupportActionBar.setTitle("AA");
 
                 break;
-            case "PUBLISHTWTEENT":
-                mSupportActionBar.setTitle("弹一弹");
+            case "NEWS3":
+                mSupportActionBar.setTitle("BB");
 
                 break;
-            case "FIND":
-                mSupportActionBar.setTitle("发现");
+            case "NEWS4":
+                mSupportActionBar.setTitle("CC");
 
                 break;
-            case "ME":
-                mSupportActionBar.setTitle("我的");
+            case "NEWS5":
+                mSupportActionBar.setTitle("DD");
 
                 break;
             default:

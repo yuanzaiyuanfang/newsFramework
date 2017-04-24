@@ -1,4 +1,4 @@
-package com.yzyfdf.newsframework.ui.act;
+package com.yzyfdf.newsframework.util;
 
 import android.app.Application;
 import android.content.Context;
@@ -10,16 +10,13 @@ import android.os.Handler;
  * 描述 ${TODO}
  */
 
-public class NewsApplication extends Application {
+public class Constant  {
     public static      Context mContext;
     public  static Handler mHandler;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mContext = this;
+    public static void init(Application application) {
+        mContext = application;
         mHandler = new Handler();
-
     }
 
 
