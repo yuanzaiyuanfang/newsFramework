@@ -29,4 +29,15 @@ public class Util {
     public static String[] getStringArray(int resId) {
         return getResources().getStringArray(resId);
     }
+
+    //找到数组中的最大值
+    public static int findMax(int[] lastPositions) {
+        int max = lastPositions[0];
+        for (int value : lastPositions) {
+            if (value > max) {
+                max = value;
+            }
+        }
+        return max;
+    }
 }

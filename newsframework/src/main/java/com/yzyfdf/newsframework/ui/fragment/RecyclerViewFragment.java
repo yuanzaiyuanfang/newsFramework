@@ -2,8 +2,10 @@ package com.yzyfdf.newsframework.ui.fragment;
 
 import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.yzyfdf.newsframework.R;
@@ -17,6 +19,8 @@ import com.yzyfdf.newsframework.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.yzyfdf.newsframework.util.Util.findMax;
 
 
 public abstract class RecyclerViewFragment extends BaseFragment implements FinalAdapter.AdapterListener, FinalAdapter.AdapterItemClickListener {
@@ -92,10 +96,23 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
 
                 if (mCurrentState == LOADSTATE.NONE) {
 
+                    int lastVisibleItemPosition = -1;
                     //获取最后一个滚动的位置
-                    LinearLayoutManager line = (LinearLayoutManager) recyclerView.getLayoutManager();
-                    //获取最后一个
-                    int lastVisibleItemPosition = line.findLastVisibleItemPosition();
+                    RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+                    if (layoutManager instanceof GridLayoutManager) {
+                        //通过LayoutManager找到当前显示的最后的item的position
+                        lastVisibleItemPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
+                    } else if (layoutManager instanceof LinearLayoutManager) {
+                        lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+                    } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+                        //因为StaggeredGridLayoutManager的特殊性可能导致最后显示的item存在多个，所以这里取到的是一个数组
+                        //得到这个数组后再取到数组中position值最大的那个就是最后显示的position值了
+                        int[] lastPositions = new int[((StaggeredGridLayoutManager) layoutManager).getSpanCount()];
+                        ((StaggeredGridLayoutManager) layoutManager).findLastVisibleItemPositions(lastPositions);
+                        lastVisibleItemPosition = findMax(lastPositions);
+                    }
+
+
                     //可见的条目是最后一位
                     //在这里再加一个判断,如果你底部是加载更多的才能上拉加载更多
                     if (lastVisibleItemPosition == mShowItems.size() - 1 && newState == RecyclerView.SCROLL_STATE_IDLE && mShowItems.get(mShowItems.size() - 1) instanceof FootType) {
