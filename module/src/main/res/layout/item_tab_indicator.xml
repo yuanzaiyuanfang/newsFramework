@@ -26,6 +26,6 @@
         android:gravity="center"
         android:textColor="@color/colorPrimary"
         android:textSize="12sp"
-        android:text="资讯"/>
+        android:text="aaa"/>
 
 </LinearLayout>

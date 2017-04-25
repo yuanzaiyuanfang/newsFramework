@@ -22,13 +22,12 @@ import java.util.List;
 public abstract class RecyclerViewFragment extends BaseFragment implements FinalAdapter.AdapterListener, FinalAdapter.AdapterItemClickListener {
 
 
-
     //集合
     private List<ItemType> mShowItems = new ArrayList<>();
     private FinalAdapter       mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView       mRecyclerView;
-
+    private RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
     //定义当前的状态
     public enum LOADSTATE {
@@ -56,7 +55,7 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
     private void init() {
         System.out.println("初始化");
         //recyclerView初始化分成两步
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setLayoutManager(setRecyclerViewLayoutManager() == null ? mLayoutManager : setRecyclerViewLayoutManager());
 
         //设置adapter数据
         mAdapter = new FinalAdapter(mShowItems, setItemBodyView(), this);
@@ -83,7 +82,7 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
         });
 
         //设置颜色
-        mSwipeRefreshLayout.setColorSchemeColors( Color.BLUE, Color.RED,Color.GREEN);
+        mSwipeRefreshLayout.setColorSchemeColors(Color.BLUE, Color.RED, Color.GREEN);
 
         //做一个上拉刷新
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -107,7 +106,7 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
                         //重新加载
                         refreshData();
 
-//                        ToastUtil.showToast("上拉加载更多");
+                        //                        ToastUtil.showToast("上拉加载更多");
                     }
                 } else {
                     ToastUtil.showToast("亲,加载中,等会!");
@@ -128,6 +127,10 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
         //添加点击事件
         mAdapter.setadapterItemClickListener(this);
 
+    }
+
+    public RecyclerView.LayoutManager setRecyclerViewLayoutManager() {
+        return null;
     }
 
 
@@ -172,7 +175,7 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
         List<ItemType> data = requestBodyData(mCurrentState);
 
         //如果集合是空,或者集合的个数为0,你还要判断当前的mShowItems的个数
-            //说明以前有数据
+        //说明以前有数据
         if (mShowItems.size() > 0) {
             if (data == null || data.size() == 0) {
                 System.out.println("当前没有数据");
@@ -258,7 +261,7 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
     }
 
     //重新下载刷新方法
-    public  void reloadData(){
+    public void reloadData() {
         mSwipeRefreshLayout.setRefreshing(true);
 
         mCurrentState = LOADSTATE.LOADING;
