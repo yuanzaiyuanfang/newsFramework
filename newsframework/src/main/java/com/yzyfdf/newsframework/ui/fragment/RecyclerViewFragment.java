@@ -31,7 +31,6 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
     private FinalAdapter       mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView       mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
     //定义当前的状态
     public enum LOADSTATE {
@@ -59,8 +58,7 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
     private void init() {
         System.out.println("初始化");
         //recyclerView初始化分成两步
-        mRecyclerView.setLayoutManager(setRecyclerViewLayoutManager() == null ? mLayoutManager : setRecyclerViewLayoutManager());
-
+        initRecyclerView(mRecyclerView);
         //设置adapter数据
         mAdapter = new FinalAdapter(mShowItems, setItemBodyView(), this);
         mRecyclerView.setAdapter(mAdapter);
@@ -146,8 +144,12 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
 
     }
 
-    public RecyclerView.LayoutManager setRecyclerViewLayoutManager() {
-        return null;
+    /**
+     * 自己设置LayoutManager,ItemDecoration等等
+     * @param recyclerView
+     */
+    private void initRecyclerView(RecyclerView recyclerView) {
+
     }
 
 
