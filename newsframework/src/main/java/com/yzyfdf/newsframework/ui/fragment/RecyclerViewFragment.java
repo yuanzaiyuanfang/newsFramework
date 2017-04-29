@@ -27,7 +27,7 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
 
 
     //集合
-    private List<ItemType> mShowItems = new ArrayList<>();
+    private List<ItemType> mList = new ArrayList<>();
     private FinalAdapter       mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView       mRecyclerView;
@@ -60,7 +60,7 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
         //recyclerView初始化分成两步
         initRecyclerView(mRecyclerView);
         //设置adapter数据
-        mAdapter = new FinalAdapter(mShowItems, setItemBodyView(), this);
+        mAdapter = new FinalAdapter(mList, setItemBodyView(), this);
         mRecyclerView.setAdapter(mAdapter);
 
         //设置下拉刷新
@@ -113,7 +113,7 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
 
                     //可见的条目是最后一位
                     //在这里再加一个判断,如果你底部是加载更多的才能上拉加载更多
-                    if (lastVisibleItemPosition == mShowItems.size() - 1 && newState == RecyclerView.SCROLL_STATE_IDLE && mShowItems.get(mShowItems.size() - 1) instanceof FootType) {
+                    if (lastVisibleItemPosition == mList.size() - 1 && newState == RecyclerView.SCROLL_STATE_IDLE && mList.get(mList.size() - 1) instanceof FootType) {
                         //ToastUtil.showToast("我已经到底了,可以重新加载");
                         //更改当前的状态
                         mCurrentState = LOADSTATE.MORELOAD;
@@ -148,9 +148,7 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
      * 自己设置LayoutManager,ItemDecoration等等
      * @param recyclerView
      */
-    private void initRecyclerView(RecyclerView recyclerView) {
-
-    }
+    public abstract void initRecyclerView(RecyclerView recyclerView) ;
 
 
     //是否下拉
@@ -193,9 +191,9 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
         }
         List<ItemType> data = requestBodyData(mCurrentState);
 
-        //如果集合是空,或者集合的个数为0,你还要判断当前的mShowItems的个数
+        //如果集合是空,或者集合的个数为0,你还要判断当前的mList的个数
         //说明以前有数据
-        if (mShowItems.size() > 0) {
+        if (mList.size() > 0) {
             if (data == null || data.size() == 0) {
                 System.out.println("当前没有数据");
                 ToastUtil.showToast("当前没有数据,或者网络异常");
@@ -209,7 +207,7 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
                 }
                 //更新状态
                 mCurrentState = LOADSTATE.NONE;
-                return mShowItems;
+                return mList;
             }
         } else {//说明以前没有数据
             if (data == null || data.size() == 0) {
@@ -223,10 +221,10 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
         //下拉刷新要清空以前的数据
         //这里一定要在请求完数据之后
         if (mCurrentState == LOADSTATE.LOADING) {
-            mShowItems.clear();//这里一定要用clear
+            mList.clear();//这里一定要用clear
         }
 
-        mShowItems.addAll(data);
+        mList.addAll(data);
 
 
         //请求完数据后把刷新重置
@@ -247,7 +245,7 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
             }
         });
 
-        return mShowItems;
+        return mList;
     }
 
     //请求body的数据
@@ -265,7 +263,7 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
     }
 
     @Override
-    public abstract void bindBodyView(List<ItemType> showItems, FinalViewHolder holder, int position);
+    public abstract void bindBodyView(List<ItemType> mList, FinalViewHolder holder, int position);
 
     private FootViewLayout mFootViewLayout;
 
@@ -275,7 +273,7 @@ public abstract class RecyclerViewFragment extends BaseFragment implements Final
     }
 
     @Override
-    public void onItemClick(FinalViewHolder holder, int position, List<ItemType> showItems) {
+    public void onItemClick(FinalViewHolder holder, int position, List<ItemType> mLists) {
 
     }
 

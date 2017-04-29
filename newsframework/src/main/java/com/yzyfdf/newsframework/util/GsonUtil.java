@@ -3,12 +3,17 @@ package com.yzyfdf.newsframework.util;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,5 +112,60 @@ public class GsonUtil {
 		}
 		return value;
 	}
+
+
+
+	//解析json数组
+	public static <T> List<T> fromJsonArray(String json, Class<T> clazz)  {
+		List<T> lst = null;
+		try {
+			lst = new ArrayList<T>();
+
+			JsonArray array = new JsonParser().parse(json).getAsJsonArray();
+			for(final JsonElement elem : array){
+				lst.add(new Gson().fromJson(elem, clazz));
+			}
+		} catch (JsonSyntaxException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return lst;
+	}
+
+
+/*	public static <T> List<T> changeGsonToList(String gsonString, T cls) {
+		Gson gson = new Gson();
+		List<T> list = gson.fromJson(gsonString, new TypeToken<List<T>>() {
+		}.getType());
+		return list;
+	}*/
+
+
+/*	*//**
+	 * 把json字符串变成集合
+	 * params: new TypeToken<List<yourbean>>(){}.getType(),
+	 *
+	 * @param json
+	 * @param type  new TypeToken<List<yourbean>>(){}.getType()
+	 * @return
+	 *//*
+	public static <T> List<T> parseJsonToList(String json, Type type) {
+		Gson gson = new Gson();
+		List<T> list = gson.fromJson(json, type);
+		return list;
+	}*/
+/*	public static <T> List<T> parseJsonToList(String json, Class<T> clss) {
+		Gson gson = new Gson();
+		List<T> list = gson.fromJson(json, new TypeToken<List<T>>(){}.getType());
+		return list;
+	}*/
+/*	public static <T> List<T> parseJsonToList2(String json) {
+		Gson gson = new Gson();
+		List<T> list = gson.fromJson(json, new TypeToken<List<T>>(){}.getType());
+		return list;
+	}*/
+
+
 
 }

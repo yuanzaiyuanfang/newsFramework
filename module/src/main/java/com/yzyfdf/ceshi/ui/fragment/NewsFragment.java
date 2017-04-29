@@ -2,6 +2,8 @@ package com.yzyfdf.ceshi.ui.fragment;
 
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,6 +18,7 @@ import com.yzyfdf.newsframework.adapter.FinalViewHolder;
 import com.yzyfdf.newsframework.interfaces.ItemType;
 import com.yzyfdf.newsframework.manager.LoadData;
 import com.yzyfdf.newsframework.ui.fragment.RecyclerViewFragment;
+import com.yzyfdf.newsframework.ui.widget.listDivider.DividerGridItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,12 @@ public class NewsFragment extends RecyclerViewFragment {
     @Override
     public int setItemBodyView() {
         return R.layout.item_list_news;
+    }
+
+    @Override
+    public void initRecyclerView(RecyclerView recyclerView) {
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),4));
+        recyclerView.addItemDecoration(new DividerGridItemDecoration(getContext()));
     }
 
     @Override
@@ -60,8 +69,8 @@ public class NewsFragment extends RecyclerViewFragment {
     }
 
     @Override
-    public void bindBodyView(List<ItemType> showItems, FinalViewHolder holder, int position) {
-        NewItemBean.ResultBean.ItemBodyBean itemBodyBean = (NewItemBean.ResultBean.ItemBodyBean) showItems.get(position);
+    public void bindBodyView(List<ItemType> mList, FinalViewHolder holder, int position) {
+        NewItemBean.ResultBean.ItemBodyBean itemBodyBean = (NewItemBean.ResultBean.ItemBodyBean) mList.get(position);
 
         holder.setText(R.id.tv_title,itemBodyBean.getTitle());
         holder.setText(R.id.tv_description,itemBodyBean.getBody());

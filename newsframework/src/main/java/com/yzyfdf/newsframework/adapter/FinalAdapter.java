@@ -19,15 +19,15 @@ import java.util.List;
 
 public class FinalAdapter extends RecyclerView.Adapter<FinalViewHolder> {
 
-    private List<ItemType> mShowItems = new ArrayList<>();
+    private List<ItemType> mList = new ArrayList<>();
 
 
     private AdapterListener mAdapterListener;
     private int mBodyLayout = 0;
     private FootViewLayout mFootViewLayout;
 
-    public FinalAdapter(List<ItemType> showItems, int bodyLayout, AdapterListener adapterListener) {
-        mShowItems = showItems;
+    public FinalAdapter(List<ItemType> list, int bodyLayout, AdapterListener adapterListener) {
+        mList = list;
         mBodyLayout = bodyLayout;
         this.mAdapterListener = adapterListener;
     }
@@ -74,7 +74,7 @@ public class FinalAdapter extends RecyclerView.Adapter<FinalViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onItemClick(holder,position,mShowItems);
+                mListener.onItemClick(holder,position, mList);
             }
         });
 
@@ -86,7 +86,7 @@ public class FinalAdapter extends RecyclerView.Adapter<FinalViewHolder> {
                 mAdapterListener.bindHeadView(holder,position);
                 break;
             case BODYTYPE:
-                mAdapterListener.bindBodyView(mShowItems,holder,position);
+                mAdapterListener.bindBodyView(mList,holder,position);
 
                 break;
             case FOOTTYPE:
@@ -102,7 +102,7 @@ public class FinalAdapter extends RecyclerView.Adapter<FinalViewHolder> {
     //展示的条目
     @Override
     public int getItemCount() {
-        return mShowItems.size();
+        return mList.size();
     }
 
     //多条目
@@ -113,14 +113,14 @@ public class FinalAdapter extends RecyclerView.Adapter<FinalViewHolder> {
     //实现多条目的
     @Override
     public int getItemViewType(int position) {
-        if (mShowItems.get(position) instanceof HeadType) {
+        if (mList.get(position) instanceof HeadType) {
             return HEADTYPE;
         }
 
-        if (mShowItems.get(position) instanceof BodyType) {
+        if (mList.get(position) instanceof BodyType) {
             return BODYTYPE;
         }
-        if (mShowItems.get(position) instanceof FootType) {
+        if (mList.get(position) instanceof FootType) {
             return FOOTTYPE;
         }
 
@@ -149,7 +149,7 @@ public class FinalAdapter extends RecyclerView.Adapter<FinalViewHolder> {
     public interface AdapterListener {
         void bindHeadView(FinalViewHolder holder, final int position);
 
-        void bindBodyView(List<ItemType> showItems, FinalViewHolder holder, final int position);
+        void bindBodyView(List<ItemType> list, FinalViewHolder holder, final int position);
 
         void bindFootView(FootViewLayout mFootViewLayout);
     }
@@ -158,27 +158,27 @@ public class FinalAdapter extends RecyclerView.Adapter<FinalViewHolder> {
     public void updateData() {
         //根据头部布局自动刷新数据
         //不管你以前有没有,都删除
-        for (int i = 0; i < mShowItems.size(); i++) {
-            if (mShowItems.get(i) instanceof HeadType) {
-                mShowItems.remove(i);
+        for (int i = 0; i < mList.size(); i++) {
+            if (mList.get(i) instanceof HeadType) {
+                mList.remove(i);
             }
         }
         if (mHeadView > 0) {
             //说明要添加头部
-            mShowItems.add(0,new HeadBean());
+            mList.add(0,new HeadBean());
         }
 
         //底部
-        for (int i = 0; i < mShowItems.size(); i++) {
-            if (mShowItems.get(i) instanceof FootType) {
-                mShowItems.remove(i);
+        for (int i = 0; i < mList.size(); i++) {
+            if (mList.get(i) instanceof FootType) {
+                mList.remove(i);
             }
         }
 
         //根据你是否需要底部来添加数据
         if (isFootShow) {
             //true说明要底部
-            mShowItems.add(new FootBean());
+            mList.add(new FootBean());
         }
 
         //刷新
@@ -190,7 +190,7 @@ public class FinalAdapter extends RecyclerView.Adapter<FinalViewHolder> {
 
     //添加点击事件
     public interface AdapterItemClickListener {
-        void onItemClick(FinalViewHolder holder, int position, List<ItemType> showItems);
+        void onItemClick(FinalViewHolder holder, int position, List<ItemType> list);
     }
 
     //这个监听我想通过方法,为什么???

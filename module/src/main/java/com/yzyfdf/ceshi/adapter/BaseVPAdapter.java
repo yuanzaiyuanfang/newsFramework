@@ -14,9 +14,9 @@ public class BaseVPAdapter extends FragmentStatePagerAdapter {
     //传入集合
     private List<PagerBean> mList = new ArrayList<>();
 
-    public BaseVPAdapter(FragmentManager fm, List<PagerBean> showItems) {
+    public BaseVPAdapter(FragmentManager fm, List<PagerBean> list) {
         super(fm);
-        mList = showItems;
+        mList = list;
     }
 
     @Override
